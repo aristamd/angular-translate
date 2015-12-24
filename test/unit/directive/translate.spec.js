@@ -37,16 +37,16 @@ describe('pascalprecht.translate', function () {
     }));
 
     it('should return translation id if translation doesn\'t exist', function () {
-      element = $compile('<div translate="TEXT"></div>')($rootScope);
+      element = $compile('<div translate="TEXT">ORIGINAL</div>')($rootScope);
       $rootScope.$digest();
-      expect(element.text()).toBe('TEXT');
+      expect(element.text()).toBe('ORIGINAL');
     });
 
     it('should return translation id if translation doesn\'t exist and if its passed as interpolation', function () {
       $rootScope.translationIds = 'TEXT';
-      element = $compile('<div translate="{{translationIds}}"></div>')($rootScope);
+      element = $compile('<div translate="{{translationIds}}">ORIGINAL</div>')($rootScope);
       $rootScope.$digest();
-      expect(element.text()).toBe('TEXT');
+      expect(element.text()).toBe('ORIGINAL');
     });
 
     it('should return default text if translation doesn\'t exist', function () {
@@ -80,9 +80,9 @@ describe('pascalprecht.translate', function () {
 
     it('should return translation id if translation doesn\'t exist and if its passed as interpolation', function () {
       $rootScope.translationId = 'TEXT';
-      element = $compile('<div translate="{{translationId}}"></div>')($rootScope);
+      element = $compile('<div translate="{{translationId}}">ORIGINAL</div>')($rootScope);
       $rootScope.$digest();
-      expect(element.text()).toBe('TEXT');
+      expect(element.text()).toBe('ORIGINAL');
     });
 
     it('should return translation if translation id exist and is passed as interpolation', function () {
@@ -144,9 +144,9 @@ describe('pascalprecht.translate', function () {
         $rootScope.translationId = 'TRANSLATION_ID';
         element = $compile('<div translate>{{translationId}}</div>')($rootScope);
         $rootScope.$digest();
-        $rootScope.translationId = 'TEXT'; // refresh expression
+        $rootScope.translationId = 'ANOTHER_ONE'; // refresh expression
         $rootScope.$digest();
-        expect(element.text()).toBe('TEXT');
+        expect(element.text()).toBe('bar');
       });
 
       it('should return empty translation if translationId scope Variable does not exist and if its passed as interpolation', function () {
@@ -225,7 +225,7 @@ describe('pascalprecht.translate', function () {
         expect(element.text()).toBe('foo');
         $rootScope.translationId = '';
         $rootScope.$digest();
-        expect(element.text()).toBe('');
+        expect(element.text()).toBe('foo');
       });
       it('(translation id is passed as interpolation in text', function () {
         $rootScope.translationId = 'TRANSLATION_ID';
@@ -234,7 +234,7 @@ describe('pascalprecht.translate', function () {
         expect(element.text()).toBe('foo');
         $rootScope.translationId = '';
         $rootScope.$digest();
-        expect(element.text()).toBe('');
+        expect(element.text()).toBe('foo');
       });
     });
 

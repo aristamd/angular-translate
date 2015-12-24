@@ -272,9 +272,14 @@ function translateDirective($translate, $q, $interpolate, $compile, $parse, $roo
 
         var applyTranslation = function (value, scope, successful, translateAttr) {
           if (translateAttr === 'translate') {
-            // default translate into innerHTML
-            if (!successful && typeof scope.defaultText !== 'undefined') {
-              value = scope.defaultText;
+            // In the event we were not able to find a translation use default
+            // text (if some has been defined) or the existing element content
+            if (!successful) {
+              if ( iElement.text().match(interpolateRegExp) === null && typeof scope.defaultText === 'undefined' ) {
+                value = iElement.text();
+              } else if (typeof scope.defaultText !== 'undefined') {
+                value = scope.defaultText;
+              }
             }
             iElement.empty().append(scope.preText + value + scope.postText);
             var globallyEnabled = $translate.isPostCompilingEnabled();
